@@ -10,7 +10,7 @@
 					{{ modInfo.author }}
 				</v-chip>
 				<v-spacer></v-spacer>
-				<v-tooltip open-delay="1500"  bottom v-if="!open">
+				<v-tooltip open-delay="500"  bottom v-if="!open">
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn v-bind="attrs" v-on="on" @click.stop="emitEvent('install', modInfo)" class="ml-3" icon>
 							<v-icon>
@@ -31,7 +31,7 @@
 				</v-row>
 				<v-row no-gutters>
 					<v-spacer></v-spacer>
-					<v-tooltip open-delay="1500" bottom>
+					<v-tooltip open-delay="500" bottom>
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn  v-bind="attrs" v-on="on" @click="emitEvent('install', modInfo)" class="ml-3 mr-2" icon small>
 								<v-icon>

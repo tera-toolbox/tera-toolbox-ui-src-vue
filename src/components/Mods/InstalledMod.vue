@@ -10,7 +10,7 @@
 					{{ modInfo.author }}
 				</v-chip>
 				<v-spacer></v-spacer>
-				<v-tooltip open-delay="1500" bottom v-if="!open && !modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
+				<v-tooltip open-delay="500" bottom v-if="!open && !modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn v-bind="attrs" v-on="on" @click.stop="emitEvent('toggle-autoupdate', modInfo)" class="ml-3" icon>
 							<v-icon>
@@ -20,7 +20,7 @@
 					</template>
 					<span> {{ toggleAutoupdateString }}</span>
 				</v-tooltip>
-				<v-tooltip open-delay="1500" bottom v-if="!open && !modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
+				<v-tooltip open-delay="500" bottom v-if="!open && !modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn v-bind="attrs" v-on="on" @click.stop="emitEvent('toggle', modInfo)" icon>
 							<v-icon>
@@ -41,7 +41,7 @@
 				</v-row>
 				<v-row no-gutters>
 					<v-spacer></v-spacer>
-					<v-tooltip open-delay="1500" bottom v-if="modInfo.readmePath">
+					<v-tooltip open-delay="500" bottom v-if="modInfo.readmePath">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn v-bind="attrs" v-on="on" @click="emitEvent('readme', modInfo.readmePath)" icon small>
 								<v-icon>
@@ -53,7 +53,7 @@
 							{{ readmeString }}
 						</span>
 					</v-tooltip>
-					<v-tooltip open-delay="1500" bottom v-if="modInfo.donationUrl">
+					<v-tooltip open-delay="500" bottom v-if="modInfo.donationUrl">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn v-bind="attrs" v-on="on" @click="emitEvent('donation', modInfo.donationUrl)" icon small>
 								<v-icon>
@@ -65,7 +65,7 @@
 							{{ donateString }}
 						</span>
 					</v-tooltip>
-					<v-tooltip open-delay="1500" bottom v-if="modInfo.supportUrl">
+					<v-tooltip open-delay="500" bottom v-if="modInfo.supportUrl">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn v-bind="attrs" v-on="on" @click="emitEvent('support', modInfo.supportUrl)" icon small>
 								<v-icon>
@@ -77,7 +77,7 @@
 							{{ supportString }}
 						</span>
 					</v-tooltip>
-					<v-tooltip open-delay="1500" bottom v-if="!modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
+					<v-tooltip open-delay="500" bottom v-if="!modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn v-bind="attrs" v-on="on" @click="emitEvent('toggle-autoupdate', modInfo)" class="ml-3" icon small>
 								<v-icon>
@@ -89,7 +89,7 @@
 							{{ toggleAutoupdateString }}
 						</span>
 					</v-tooltip>
-					<v-tooltip open-delay="1500" bottom v-if="!modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
+					<v-tooltip open-delay="500" bottom v-if="!modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn v-bind="attrs" v-on="on" @click="emitEvent('toggle', modInfo)" icon small>
 								<v-icon>
@@ -101,7 +101,7 @@
 							{{ toggleString }}
 						</span>
 					</v-tooltip>
-					<v-tooltip open-delay="1500" bottom v-if="!modInfo.isCoreModule">
+					<v-tooltip open-delay="500" bottom v-if="!modInfo.isCoreModule">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn v-bind="attrs" v-on="on" @click="emitEvent('uninstall', modInfo)"  class="ml-3 mr-2" icon small>
 								<v-icon>
