@@ -15,6 +15,7 @@ const OUT_EVENTS = {
 	CLOSEUI: "close toolbox",
 	MINUI: "minimize window",
 	OPENDISCORD: "open discord",
+	OPENLINK: "open link",
 	SHOWMODFOLDER: "show mods folder",
 	SETCONFIG: "set config",
 	STARTTB: "start proxy",

@@ -317,6 +317,10 @@ export default {
 		},
 		installedModActionClick(payload) {
 			switch(payload.type) {
+			case("support"):
+			case("donation"):
+				window.renderer.send(events.OUT_EVENTS.OPENLINK, payload.payload);
+				break;
 			case("uninstall"): 
 				if(this.tbRunning || this.tbStarting) {
 					this.popupText = this["gui_main_modal_error-cannot-uninstall-mod-while-running"];
