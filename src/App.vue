@@ -121,7 +121,7 @@
 								<BoolOption @update="settingsChange" :text="gui_main_static_tabs_settings_content_noupdate" :field="'noupdate'" :startValue="settings.noupdate"></BoolOption>
 								<BoolOption @update="settingsChange" :text="gui_main_static_tabs_settings_content_noselfupdate" :field="'noselfupdate'" :startValue="settings.noselfupdate"></BoolOption>
 								<BoolOption @update="settingsChange" :text="gui_main_static_tabs_settings_content_minimizetotray" :field="'minimizetotray'" :startValue="settings.gui.minimizetotray"></BoolOption>
-								<v-subheader> {{ gui_main_static_tabs_settings_groupclient }}</v-subheader>
+								<v-subheader class="mt-1"> {{ gui_main_static_tabs_settings_groupclient }}</v-subheader>
 								<BoolOption @update="settingsChange" :text="gui_main_static_tabs_settings_content_noslstags" :field="'noslstags'" :startValue="settings.noslstags"></BoolOption>
 								<BoolOption @update="settingsChange" :text="gui_main_static_tabs_settings_content_removecounters" :field="'removecounters'" :startValue="settings.removecounters"></BoolOption>
 								<BoolOption @update="settingsChange" :text="gui_main_static_tabs_settings_content_noserverautojoin" :field="'noserverautojoin'" :startValue="settings.noserverautojoin"></BoolOption>
@@ -217,7 +217,7 @@ export default {
 			return this.tbStarting ? this.mdiPauseCircleOutline : this.tbRunning ? this.mdiPlay :this.mdiStopCircleOutline ;
 		},
 		newModsWithFilter() {
-			const keywordsFromFilter = this.filter.length > 0 ? this.filter.split(",").map(x => x.trim().toLowerCase()).filter(x => x.length > 0) : [];
+			const keywordsFromFilter = this.filter && this.filter.length > 0 ? this.filter.split(",").map(x => x.trim().toLowerCase()).filter(x => x.length > 0) : [];
 			return this.modOnlineListRaw.filter(modInfo => {
 				if(modInfo.keywords && !this.networkModsCheckbox && modInfo.keywords.includes("network")) return false;
 				if(modInfo.keywords && !this.clientModsCheckbox && modInfo.keywords.includes("client")) return false;
