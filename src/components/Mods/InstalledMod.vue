@@ -109,6 +109,9 @@
 								</v-icon>
 							</v-btn>
 						</template>
+						<span>
+							{{ removeString }}
+						</span>
 					</v-tooltip>
 				</v-row>
 			</v-container>
