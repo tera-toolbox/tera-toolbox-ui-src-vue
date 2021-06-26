@@ -2,11 +2,11 @@
 	<v-expansion-panel class="mt-1" style="min-height: 25px">
 		<v-expansion-panel-header class="pa-1" v-slot="{ open }">
 			<v-row no-gutters>
-				<v-chip outlined label class="mr-2">
+				<v-chip outlined label class="margin-top-2px mr-2">
 					<v-icon size=20 v-if="modInfo.drmKey" left> {{ mdiCurrencyUsd }}</v-icon>
 					{{ displayName(modInfo) }}
 				</v-chip>
-				<v-chip v-if="modInfo.author" outlined label class="mr-4 text--secondary">
+				<v-chip v-if="modInfo.author" outlined label class="margin-top-2px mr-4 text--secondary">
 					{{ modInfo.author }}
 				</v-chip>
 				<v-spacer></v-spacer>

@@ -1,5 +1,14 @@
 <template>
 	<v-app>
+		<v-dialog
+			v-model="popupActivated"
+			max-width="330">
+			<v-card>
+				<v-card-text class="pt-4">
+					{{ popupText }}
+				</v-card-text>
+			</v-card>
+		</v-dialog>
 		<v-system-bar class="elevation-1 mb-0 pa-0" window>
 			<span class="ml-2 mr-2" style="-webkit-app-region: drag;"> {{ gui_main_title }}</span>
 			<v-icon size=20>{{ toolboxStatus }}</v-icon>
@@ -87,7 +96,7 @@
 							<v-container fluid class="pa-1">
 								<v-toolbar height=32>
 									<v-spacer></v-spacer>
-									<v-text-field v-model="filter" single-line :prepend-inner-icon="mdiMagnify" :label="gui_main_static_tabs_newmods_content_filter" style="max-width: 220px;" dense hide-details></v-text-field>
+									<v-text-field v-model="filter" clearable single-line :prepend-inner-icon="mdiMagnify" :label="gui_main_static_tabs_newmods_content_filter" style="max-width: 230px;" dense hide-details></v-text-field>
 									<v-checkbox v-model="networkModsCheckbox" class="ml-2" :label="gui_main_static_tabs_newmods_content_filter_network" dense hide-details></v-checkbox>
 									<v-checkbox v-model="clientModsCheckbox" class="ml-2" :label="gui_main_static_tabs_newmods_content_filter_client" dense hide-details></v-checkbox>
 									<v-spacer></v-spacer>
@@ -166,6 +175,8 @@ export default {
 		admin: false,
 		newUpdate: false,
 
+		popupActivated: false,
+		popupText: "",
 		filter: "",
 		networkModsCheckbox: true,
 		clientModsCheckbox: true,
@@ -216,7 +227,7 @@ export default {
 		}
 	},
 	mounted: function() {
-		this.languages = Object.keys(window.languageNames).forEach(id => { this.languages.push({ text: window.languageNames[id], value: id});});
+		Object.keys(window.languageNames).forEach(id => { this.languages.push({ text: window.languageNames[id], value: id});});
 		this.setLanguage();
 		window.renderer.on(events.INC_EVENTS.LOGENTRY, (_, msg, type) => {
 			let timeStr = "";
@@ -306,8 +317,23 @@ export default {
 		},
 		installedModActionClick(payload) {
 			switch(payload.type) {
-			case("uninstall"): if(!this.tbRunning && !this.tbStarting && !this.awaitInstalledModAction) { this.awaitInstalledModAction = true; window.renderer.send(events.OUT_EVENTS.UNINSTALLMOD, payload.payload); } break;
-			case("toggle"): if(!this.awaitInstalledModAction) { this.awaitInstalledModAction = true; window.renderer.send(events.OUT_EVENTS.TOGGLEMODLOAD, payload.payload); } break; 
+			case("uninstall"): 
+				if(this.tbRunning || this.tbStarting) {
+					this.popupText = this["gui_main_modal_error-cannot-uninstall-mod-while-running"];
+					this.popupActivated = true;
+					return;
+				}
+				if(!this.awaitInstalledModAction) {
+					this.awaitInstalledModAction = true;
+					window.renderer.send(events.OUT_EVENTS.UNINSTALLMOD, payload.payload);
+				}
+				break;
+			case("toggle"): 
+				if(!this.awaitInstalledModAction) {
+					this.awaitInstalledModAction = true;
+					window.renderer.send(events.OUT_EVENTS.TOGGLEMODLOAD, payload.payload);
+				}
+				break; 
 			case("toggle-autoupdate"): if(!this.awaitInstalledModAction) { this.awaitInstalledModAction = true; window.renderer.send(events.OUT_EVENTS.TOGGLEMODUPDATE, payload.payload); } break; 
 			case("readme"): window.renderer.send(events.OUT_EVENTS.OPENINNOTEPAD, payload.payload); break; 
 			default: console.log(payload); break;
@@ -315,18 +341,40 @@ export default {
 		},
 		newModActionClick(payload) {
 			switch(payload.type) {
-			case("install"): if(!this.tbRunning && !this.tbStarting && !this.awaitNewModAction) { this.awaitNewModAction = true; window.renderer.send(events.OUT_EVENTS.INSTALLMOD, payload.payload); } break;
+			case("install"):
+				if(this.tbRunning || this.tbStarting) {
+					this.popupText = this["gui_main_modal_error-cannot-install-mod-while-running"];
+					this.popupActivated = true;
+					return;
+				}
+				if(!this.awaitNewModAction) {
+					this.awaitNewModAction = true; window.renderer.send(events.OUT_EVENTS.INSTALLMOD, payload.payload);
+				}
+				break;
 			default: console.log(payload); break;
 			}
 		},
 		settingsChange(payload) {
-			console.log("change settings", payload);
 			switch(payload.field) {
 			case("autostart"): this.settings.gui.autostart = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
 			case("updatelog"): this.settings.updatelog = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
 			case("logtimes"): this.settings.gui.logtimes = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
-			case("noupdate"): this.settings.noupdate = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
-			case("noselfupdate"): this.settings.noselfupdate = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
+			case("noupdate"): 
+				if(payload.val) {
+					this.popupText = this["gui_main_modal_warn-mod-update-disabled"];
+					this.popupActivated = true;
+				}
+				this.settings.noupdate = payload.val;
+				window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings);
+				break;
+			case("noselfupdate"):
+				if(payload.val) {
+					this.popupText = this["gui_main_modal_warn-self-update-disabled"];
+					this.popupActivated = true;
+				}
+				this.settings.noselfupdate = payload.val;
+				window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings);
+				break;
 			case("noslstags"): this.settings.noslstags = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
 			case("noserverautojoin"): this.settings.noserverautojoin = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
 			case("minimizetotray"): this.settings.gui.minimizetotray = payload.val; window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
@@ -335,7 +383,6 @@ export default {
 			case("uilanguage"): this.settings.uilanguage = payload.val; setState("language", this.settings.uilanguage); this.setLanguage(); window.renderer.send(events.OUT_EVENTS.SETCONFIG, this.settings); break;
 			default: console.log(payload); break;
 			}
-			console.log("log times after switch", this.settings.gui.logtimes);
 		},
 		tabChange() {
 			switch(this.selectedTab) {

@@ -36,7 +36,11 @@ const state = Vue.observable({
 	"gui_main_start-stop-proxy-starting": "",
 	"gui_main_start-stop-proxy-stopping": "",
 	"gui_main_start-stop-proxy-running": "",
-	"gui_main_start-stop-proxy-not-running": ""
+	"gui_main_start-stop-proxy-not-running": "",
+	"gui_main_modal_error-cannot-install-mod-while-running": "",
+	"gui_main_modal_error-cannot-uninstall-mod-while-running": "",
+	"gui_main_modal_warn-self-update-disabled": "",
+	"gui_main_modal_warn-mod-update-disabled": ""
 });
 
 const storeGetters = Object.keys(state)
