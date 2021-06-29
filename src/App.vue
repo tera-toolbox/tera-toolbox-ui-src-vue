@@ -62,7 +62,7 @@
 					</v-btn>
 					<v-tab-item :transition="false" :reverse-transition="false">
 						<v-container fluid class="pa-1 pre-wrap-words" >
-							<v-btn v-show="logs.length" fab absolute right small>
+							<v-btn class="mr-1 mt-2" v-show="logs.length" fab absolute right small>
 								<v-icon @click="logs = []">
 									{{ mdiClose }}
 								</v-icon>
