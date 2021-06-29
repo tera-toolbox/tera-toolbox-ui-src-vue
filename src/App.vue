@@ -62,6 +62,11 @@
 					</v-btn>
 					<v-tab-item :transition="false" :reverse-transition="false">
 						<v-container fluid class="pa-1 pre-wrap-words" >
+							<v-btn v-show="logs.length" fab absolute right small>
+								<v-icon @click="logs = []">
+									{{ mdiClose }}
+								</v-icon>
+							</v-btn>
 							<div class="override-line-height scroller" id="logs" ref="logs">
 								<div v-for="(item, index) of logs" :key="index" :class="item.type">{{ item.text }}</div>
 							</div>
