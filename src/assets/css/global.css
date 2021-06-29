@@ -46,6 +46,7 @@ html {
 .scroller {
 	height: calc(100vh - 76px);
 	overflow-y: auto;
+
 }
 
 .scroller::-webkit-scrollbar {
@@ -68,6 +69,7 @@ html {
 .scroller-cutted {
 	height: calc(100vh - 108px);
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .scroller-cutted::-webkit-scrollbar {

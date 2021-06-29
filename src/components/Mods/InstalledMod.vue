@@ -1,13 +1,13 @@
 <template>
 	<v-expansion-panel class="mt-1" style="min-height: 25px" :class="isDisabledClass">
-		<v-expansion-panel-header class="pa-1" v-slot="{ open }">
+		<v-expansion-panel-header class="pa-0 pl-1 pr-1" v-slot="{ open }">
 			<v-row no-gutters>
 				<v-chip outlined label class="margin-top-2px mr-2">
 					<v-icon size=20 v-if="modInfo.drmKey" left> {{ mdiCurrencyUsd }}</v-icon>
 					{{ displayName(modInfo) }}
 				</v-chip>
-				<v-chip v-if="modInfo.author" outlined label class="margin-top-2px mr-4 text--secondary">
-					{{ modInfo.author }}
+				<v-chip v-if="modInfo.version" outlined label class="margin-top-2px mr-4 text--secondary">
+					{{ modInfo.version }}
 				</v-chip>
 				<v-spacer></v-spacer>
 				<v-tooltip open-delay="500" bottom v-if="!open && !modInfo.isCoreModule && modInfo.compatibility === 'compatible'">
@@ -40,6 +40,9 @@
 					</p>
 				</v-row>
 				<v-row no-gutters>
+					<v-chip v-if="modInfo.author" outlined label class="text--secondary">
+						by {{ modInfo.author }}
+					</v-chip>
 					<v-spacer></v-spacer>
 					<v-tooltip open-delay="500" bottom v-if="modInfo.readmePath">
 						<template v-slot:activator="{ on, attrs }">
